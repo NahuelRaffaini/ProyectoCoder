@@ -1,0 +1,54 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+
+<div style="display: flex; justify-content: space-between;">
+    <!-- Lista de Profesores -->
+    <div class="container mt-5" style="width: 45%; margin-left: 20px;">
+        <div class="card p-4">
+            <ul>
+                <h1>Profesores</h1>
+                <form action="{% url 'filtrar_profesores' %}" method="get">
+                    <input type="text" name="q" placeholder="Buscar profesores..." value="{{ request.GET.q }}"> <button type="submit" class="btn btn-outline-primary btn-sm">Buscar</button>
+                </form>
+                {% for profesor in profesores %}
+                    <li style="font-size: 20px;">{{ profesor.nombre }} {{ profesor.apellido }}</li>
+                    <div style="display: flex; column-gap: 5px;">
+                        <form action="{% url 'EliminarProfe' profesor.id %}" method="post">{% csrf_token %}
+                            <button type="submit" class="btn btn-danger"> Eliminar </button>
+                        </form>
+                        <button class="btn btn-dark">
+                            <a href="{% url 'ActualizarProfe' profesor.id %}" style="color: white;">Editar</a>
+                        </button>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Formulario de Creación -->
+    
+    <div class="container mt-5">
+        <div class="card p-4">
+            <h1 class="mb-4">Crear profesor</h1>
+            <form action="{% url 'CrearProfe' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_nombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" name="nombre" required maxlength="40" id="id_nombre">
+                </div>
+                <div class="mb-3">
+                    <label for="id_apellido" class="form-label">Apellido:</label>
+                    <input type="text" class="form-control" name="apellido" required id="id_apellido">
+                </div>
+                <div class="mb-3">
+                    <label for="id_email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" name="email" required id="id_email">
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock contenidoQueCambia %}

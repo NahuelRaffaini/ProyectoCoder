@@ -1,0 +1,14 @@
+{% extends 'padre.html' %}
+<!-- En desarrollo -->
+{% block contenidoQueCambia %}
+<form action="{% url 'CrearEntre' %}" method="post">
+    {% csrf_token %}
+    <p><label for="id_nombre">Nombre:</label> <input type="text" name="nombre" required maxlength="40" id="id_nombre"></p>
+    <p><label for="id_entregado">Entregado:</label> <input type="checkbox" name="entregado" required id="id_entregado"></p>
+    <p><label for="id_fechaDeEntrega">Fecha de entrega:</label> <input type="date" name="fechaDeEntrega" id="id_fechaDeEntrega"></p>
+    <p><label for="id_link">Link:</label> <input type="text" name="link" id="id_link"></p>
+    <button type="submit">Enviar</button>
+</form>
+{% endblock contenidoQueCambia %}
+
+#Endesarrollo

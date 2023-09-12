@@ -1,0 +1,53 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+<div style="display: flex; justify-content: space-between;">
+<!-- En desarrollo -->
+    <!-- Lista de Entregas -->
+    <div style="width: 45%;">
+        <ul>
+            <h1>Entregas</h1>
+            {% for entre in entregables %}
+                <li style="font-size: 20px;">{{ entregable }}</li>
+                <div style="display: flex; column-gap: 5px;">
+                    <form action="{% url 'EliminarEntre' entregable.id %}" method="post">{% csrf_token %}
+                        <button type="submit" class="btn btn-danger"> Eliminar </button>
+                    </form>
+                    <button class="btn btn-dark">
+                        <a href="{% url 'ActualizarEntre' entregable.id %}" style="color: white;">Editar</a>
+                    </button>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Formulario de Creación -->
+    
+    <div class="container mt-5">
+        <div class="card p-4">
+            <h1 class="mb-4">Crear Entrega</h1>
+            <form action="{% url 'CrearEntre' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <p><label for="id_nombre">Nombre:</label>
+                    <input type="text" name="nombre" required maxlength="40" id="id_nombre"></p>
+                </div>
+                <div class="mb-3">
+                    <p><label for="id_entregado">Entregado:</label>
+                    <input type="checkbox" name="entregado" id="id_entregado"></p>
+                </div>
+                <div class="mb-3">
+                    <p><label for="id_fechaDeEntrega">Fecha de entrega:</label>
+                    <input type="date" name="fechaDeEntrega" id="id_fechaDeEntrega"></p>
+                </div>
+                <div class="mb-3">
+                    <p><label for="id_link">Link:</label>
+                        <input type="text" name="link" id="id_link"></p>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+    {{ form.as_p }}
+</div>
+{% endblock contenidoQueCambia %}

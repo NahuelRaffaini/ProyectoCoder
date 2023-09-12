@@ -1,0 +1,11 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+<form action="{% url 'crear_curso' %}" method="post">
+    {% csrf_token %}
+    <p><label for="id_nombre">Nombre:</label> <input type="text" name="nombre" required maxlength="40" id="id_nombre"></p>
+    <p><label for="id_camada">Camada:</label> <input type="number" name="camada" required id="id_camada"></p>
+    <p><label for="id_fecha_creacion">Fecha de Creación:</label> <input type="date" name="fecha_creacion" id="id_fecha_creacion"></p>
+    <button type="submit">Enviar</button>
+</form>
+{% endblock contenidoQueCambia %}

@@ -1,0 +1,54 @@
+{% extends 'padre.html' %}
+
+{% block contenidoQueCambia %}
+<div style="display: flex; justify-content: space-between;">
+
+    <!-- Lista de Cursos -->
+    <div class="container mt-5" style="width: 45%; margin-left: 20px;">
+        <div class="card p-4">
+            <ul>
+                <h1>Cursos</h1>
+                <form action="{% url 'filtrar_cursos' %}" method="get">
+                    <input type="text" name="q" placeholder="Buscar cursos..." value="{{ request.GET.q }}"> <button type="submit" class="btn btn-outline-primary btn-sm">Buscar</button>
+                </form>
+                {% for curso in cursos %}
+                    <li style="font-size: 20px;">{{ curso }}</li>
+                    <div style="display: flex; column-gap: 5px;">
+                        <form action="{% url 'EliminarCurso' curso.id %}" method="post">{% csrf_token %}
+                            <button type="submit" class="btn btn-danger"> Eliminar </button>
+                        </form>
+                        <button class="btn btn-dark">
+                            <a href="{% url 'ActualizarCurso' curso.id %}" style="color: white;">Editar</a>
+                        </button>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Formulario de Creación -->
+    
+    <div class="container mt-5">
+        <div class="card p-4">
+            <h1 class="mb-4">Crear curso</h1>
+            <form action="{% url 'CrearCurso' %}" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_nombre" class="form-label">Nombre:</label>
+                    <input type="text" class="form-control" name="nombre" required maxlength="40" id="id_nombre">
+                </div>
+                <div class="mb-3">
+                    <label for="id_camada" class="form-label">Camada:</label>
+                    <input type="number" class="form-control" name="camada" required id="id_camada">
+                </div>
+                <div class="mb-3">
+                    <label for="id_fecha_creacion" class="form-label">Fecha de Creación:</label>
+                    <input type="date" class="form-control" name="fecha_creacion" required id="id_fecha_creacion">
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock contenidoQueCambia %}
